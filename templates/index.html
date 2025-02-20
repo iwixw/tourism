@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выберите подходящий туризм</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{{ url_for('static', filename='images/PSU6e02.jpeg') }}") no-repeat center center fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 24px; /* Было 24px, увеличено на 14% */
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 20px; /* Было 18px, увеличено на 14% */
+            color: #333;
+            display: block;
+            margin-bottom: 10px;
+            text-align: left; /* Выравнивание текста слева */
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .options label {
+            margin: 5px 0;
+            font-size: 18px; /* Было 16px, увеличено на 14% */
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Выравнивание текста и чекбоксов */
+        }
+
+        .options input[type="radio"], .options input[type="checkbox"] {
+            margin-right: 10px; /* Отступ справа для чекбоксов/радиокнопок */
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Было 16px, увеличено на 14% */
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Адаптивные стили для мобильных устройств */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 26px; /* Увеличение шрифта заголовка на мобильных устройствах */
+            }
+
+            label {
+                font-size: 22px; /* Увеличение шрифта меток на мобильных устройствах */
+            }
+
+            button {
+                font-size: 20px; /* Увеличение шрифта кнопки на мобильных устройствах */
+                padding: 12px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px; /* Увеличение шрифта заголовка на мобильных устройствах */
+            }
+
+            label {
+                font-size: 20px; /* Увеличение шрифта меток на мобильных устройствах */
+            }
+
+            button {
+                font-size: 18px; /* Увеличение шрифта кнопки на мобильных устройствах */
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ответьте на вопрос</h1>
+        <form method="POST">
+            <label>{{ question['question'] }}</label>
+            <div class="options">
+                {% if question['type'] == 'radio' %}
+                    {% for option in question['options'] %}
+                        <label>
+                            <input type="radio" name="{{ question['name'] }}" value="{{ option }}" required> {{ option }}
+                        </label>
+                    {% endfor %}
+                {% elif question['type'] == 'checkbox' %}
+                    {% for option in question['options'] %}
+                        <label>
+                            <input type="checkbox" name="{{ question['name'] }}" value="{{ option }}"> {{ option }}
+                        </label>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            
+
+            <button type="submit">Далее</button>
+        </form>
+    </div>
+</body>
+</html>
